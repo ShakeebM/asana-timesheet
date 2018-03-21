@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="myApp">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="Designer" content="netstager.com">
+    <meta name="Author" content="Shakeeb Mancheri, netstager.com">
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <!--<script type="text/javascript" src="js/angularcompact.js"></script>-->
+    <link rel="stylesheet" href="css/style.css">
+    <title>TimeSheet App</title>
+    <script type="text/javascript">
+        var app = angular.module('myApp', []);
+        app.controller('ModuleController', function ($scope, $http) {
+            //initial method for initializing variables and getting modules from api
+            $scope.loginMe = function(user) {
+                if (user.username == '' || user.password == '') {
+                    alert('please fill username and password')
+                }
+                else{
+                    $http({method: 'POST',url: 'asana/user/Login.php', data:{username: user.username,password: user.password}})
+                            .success(function (data, status) {
+                                if(data){
+                                    localStorage.user = JSON.stringify(data);
+                                    window.location.href = 'index.html';
+                                }
+                            })
+                            .error(function (data, status) {
+                                console.log(status)
+                            })
+                }
+            }
+            $scope.init= function(){
+                if(localStorage.user){
+                    window.location.href="index.html";
+                }
+            }
+
+        });
+    </script>
+</head>
+
+<body ng-controller="ModuleController" ng-init="init()" id="linearcontent">
+
+<div class="container" >
+    <div class="login">
+
+        <h1>Asana Timesheet App</h1>
+        <p><input type="text" placeholder="username" ng-model="user.username"></p>
+        <p><input type="password" placeholder="Password" ng-model="user.password"></p>
+        <p class="remember_me">
+            <label>
+                <input type="checkbox" name="remember_me" id="remember_me">
+                Remember me on this computer
+            </label>
+        </p>
+        <p class="submit"><button ng-click="loginMe(user)" value="Login">Login</button></p>
+    </div>
+    <div class="login-help">
+        <p>Forgot your password? <a href="login.html">Click here to reset it</a>.</p>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+
+
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/reveal.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <script src="js/jquery-1.4.4.min.js"></script>
+    <script src="js/jquery.reveal.js" type="text/javascript"></script>
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <script src="js/angularadmin.js" type="text/javascript"></script>
+
+
+    <!-- MetisMenu CSS -->
+    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet">
+
+    <!--angular-->
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body ng-controller="AdminController" ng-init="initproject()">
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <img ng-if="loaderstat==1" ng-src="img/preloaderblack.GIF" style="margin-left: 80px; height: 50px; width: 50px; float: left;" >
+                <li class="btn" ng-click="syncWorkSpaceProjects()">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        sync
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Tasks</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-tasks -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <!--<li class="sidebar-search">-->
+                            <!--<div class="input-group custom-search-form">-->
+                                <!--<input type="text" class="form-control" placeholder="Search...">-->
+                                <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-default" type="button">-->
+                                    <!--<i class="fa fa-search"></i>-->
+                                <!--</button>-->
+                            <!--</span>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; /input-group &ndash;&gt;-->
+                        <!--</li>-->
+                        <li>
+                            <a href="adminhome.html"><i class="fa fa-table fa-fw"></i> Manage Users</a>
+                        </li>
+
+                        <li>
+                            <a class="active" href="projects.html"><i class="fa fa-edit fa-fw"></i> Manage Projects</a>
+                        </li>
+                        <li>
+                            <a href="clients.html"><i class="fa fa-support fa-fw"></i> Manage Clients</a>
+                        </li>
+                        <li>
+                            <a href="reports.html"><i class="fa fa-briefcase fa-fw"></i> Reports</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <h1>Manage Projects</h1>
+
+                </div>
+                <!-- /.row -->
+
+                <div class="row" ng-if="userview==0">
+                    <div class="col-lg-6">
+
+
+                            <div class="table-responsive">
+                                <label>Projects</label>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>projectname</th>
+                                        <th>workspace</th>
+                                        <th>client</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="project in projectdata">
+                                        <td><a ng-click="selectTaskbyProject(projectdata[$index].id)">{{project.name}}</a></td>
+                                        <td>{{project.workspacename}}</td>
+                                        <td ng-click="">{{project.client.name}} <a href="#" data-reveal-id="addClientModel" data-animation="fade" class="btn btn-info" style="float: right;" ng-click="selectproject(project)">Assigm/Reassign Clients</a> </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p><h6><a ng-click="selectTaskbyProject('self')"> Task without projects</a></h6></p>
+                            </div>
+
+
+                    </div>
+                    <div class="col-lg-6">
+
+
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+            <div class="row" ng-if="userview==1" ng-init="findProjectTasksByProject()">
+                <h1>{{userselected.firstname}}<button style="float: right;" class="btn btn-info" ng-click="goback()">Back</button></h1>
+                <!--<div ng-if="projectselected!='self'">-->
+                Status: <select ng-change="selectbyUser(selecteduser)" ng-model="selecteduser" ng-options="user as user.firstname for user in userslist"></select>
+
+
+                    <h1>{{projecttasks.project.name}} Tasks</h1>
+                    <h3>Client: {{projecttasks.client.clientname}}</h3>
+                    <h3>Workspace: {{projecttasks.workspace.name}}</h3>
+                    <table class="table table-bordered table-responsive">
+                        <thead>
+                        <tr>
+                            <th>name</th>
+                            <th>Assigned to</th>
+                            <th>due_date</th>
+                            <th>status</th>
+                            <th>Total Time Spend</th>
+
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><h5>Total</h5></td>
+                            <td> <h5>{{timeworked | millSecondsToTimeString}}</h5></td>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr ng-repeat="task in projecttasks.tasks">
+                            <td>{{task.name}}</td>
+                            <td>{{task.assigned_user.name.firstname}}</td>
+                            <td>{{task.due_date}}</td>
+                            <td ng-if="task.status==1">Completed</td>
+                            <td ng-if="task.status==0">Ongoing</td>
+                            <td>{{task.totaltime | millSecondsToTimeString}}</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                <!--<div ng-if="projectselected=='self'">-->
+                    <!--<table class="table table-bordered table-responsive">-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>name</th>-->
+                            <!--<th>Assigned to</th>-->
+                            <!--<th>due_date</th>-->
+                            <!--<th>status</th>-->
+
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr ng-repeat="task in taskdata">-->
+                            <!--<td>{{task.name}}</td>-->
+                            <!--<td>{{task.assignee.name}}</td>-->
+                            <!--<td>{{task.due_date}}</td>-->
+                            <!--<td ng-if="task.status==1">Completed</td>-->
+                            <!--<td ng-if="task.status==0">Ongoing</td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                <!--</div>-->
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <div id="addClientModel" class="reveal-modal">
+        <h5 style="text-align: center;">Assign/Reassign Client to {{projectselected.name}}</h5><br/>
+        <select ng-model="client" ng-options="client as client.clientname for client in clientlist"></select>
+        <button class="btn btn-danger" ng-click="updateprojectwithClient(projectselected.id,client.clientid)">Add</button>
+        <a class="close-reveal-modal">&#215;</a>
+
+    </div>
+
+
+
+
+    <!-- jQuery Version 1.11.0 -->
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/plugins/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/sb-admin-2.js"></script>
+
+
+
+</body>
+
+</html>
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="js/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script src="js/angular.min.js" type="text/javascript"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript">
+//        $(document).ready(function() {
+//            console.log( "ready!" );
+//            var paramValue = document.location.search.split('=')[1];
+//            if(paramValue){
+//                alert(paramValue)
+//            }
+//            else{
+//                window.location.href='projects.html'
+//            }
+//        });
+        var app =angular.module('myApp',[]);
+        app.controller('TaskController',function($scope,$http){
+
+            $scope.init =function(){
+                $scope.selftask=true;
+//                $locationProvider.html5Mode(true);
+//                var paramValue = $location.search().projectid;
+                $scope.paramValue = document.location.search.split('=')[1];
+                if($scope.paramValue){
+                    if($scope.paramValue=='self'){
+                        $scope.getCompleteTaskDetails();
+                       // $scope.syncProjectTasks($scope.paramValue);
+                    }
+                    else{
+                        $scope.selftask=false;
+                        $scope.getProjctTasks($scope.paramValue);
+                        $scope.syncProjectTasks($scope.paramValue);
+                    }
+
+                }
+                else{
+                    window.location.href='projects.html'
+                }
+            }
+            $scope.getCompleteTaskDetails= function(){
+                $http({method: 'GET', url:'asana/admin/adminactions.php?action=getworkspacetasks'})
+                        .success(function(data,status){
+                            $scope.taskdata=data;
+                            console.log(data);
+                        }).error(function(data,status){console.log(data)});
+
+            }
+            $scope.getProjctTasks= function(projectid){
+                $http({method:'GET',url:'asana/admin/adminactions.php?action=getprojecttasks&projectid='+projectid})
+                        .success(function(data,status){
+                            $scope.projecttasks=data;
+                            console.log($scope.projecttasks);
+                        }).error(function(data,status){
+
+                        });
+            }
+            $scope.syncProjectTasks= function(projectid){
+                $http({method:'GET', url:'asana/admin/adminactions.php?action=syncprojecttasks&projectid='+projectid})
+                        .success(function(data,status){
+                            $scope.getProjctTasks(projectid)
+                        })
+
+            }
+
+
+        });
+
+    </script>
+</head>
+<body ng-controller="TaskController" ng-init="init()">
+<div ng-if="!selftask">
+<h1>{{projecttasks.name}} Tasks</h1>
+<h3>Client: {{projecttasks.client.name}}</h3>
+<h3>Workspace: {{projecttasks.workspace.name}}</h3>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>Assigned to</th>
+            <th>due_date</th>
+            <th>status</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="task in projecttasks.tasks">
+            <td>{{task.name}}</td>
+            <td>{{task.assignee.name}}</td>
+            <td>{{task.due_date}}</td>
+            <td ng-if="task.status==1">Completed</td>
+            <td ng-if="task.status==0">Ongoing</td>
+        </tr>
+    </tbody>
+
+</table>
+</div>
+<div ng-if="selftask">
+    <table class="table table-bordered table-responsive">
+        <thead>
+        <tr>
+            <th>name</th>
+            <th>Assigned to</th>
+            <th>due_date</th>
+            <th>status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="task in taskdata">
+            <td>{{task.name}}</td>
+            <td>{{task.assignee.name}}</td>
+            <td>{{task.due_date}}</td>
+            <td ng-if="task.status==1">Completed</td>
+            <td ng-if="task.status==0">Ongoing</td>
+        </tr>
+        </tbody>
+
+    </table>
+</div>
+</body>
+</html>
