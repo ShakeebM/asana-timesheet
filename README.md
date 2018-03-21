@@ -7,21 +7,6 @@ This README would normally document whatever steps are necessary to get your app
 * Timetracker Application
 * 1.0
 
-
-### Server credentials ###
-
-Domain name : timetracker.netstager.com
-Control panel : https://nanocloudservers.com/cpanel/
-User name : netstage
-Password : ndd87297*$
-
-### Database credentials ###
-db username: netstage_ts123
-db password: tGwU=#xsT.-&
-
-Note: while uploading, please select encryption as "Require Explicit FTP over TLS"
-
-
 ### Contribution guidelines ###
 
 * Writing tests
